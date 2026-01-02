@@ -1,12 +1,16 @@
 (function() {
+    if (window.location.protocol === 'http:') {
+        console.warn("Mendekteksi HTTP, mencoba mengalihkan ke HTTPS...");
+        window.location.replace(window.location.href.replace("http://", "https://"));
+        return;
+    }
+
     try {
-        var existingMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
-        if (!existingMeta) {
+        if (!document.querySelector('meta[http-equiv="Content-Security-Policy"]')) {
             var meta = document.createElement('meta');
             meta.httpEquiv = "Content-Security-Policy";
             meta.content = "upgrade-insecure-requests";
             document.head.prepend(meta);
-            console.log("CSP Upgrade-Insecure-Requests injected.");
         }
     } catch (e) {
         console.error("Gagal injeksi CSP:", e);
@@ -61,8 +65,7 @@
     };
 
     const adScript = document.createElement('script');
-	adScript.setAttribute('type', 'text/javascript');
-	adScript.setAttribute('src', secureSrc);
-    
+    adScript.type = 'text/javascript';
+    adScript.src = secureSrc;
     adContainer.appendChild(adScript);
 })();
