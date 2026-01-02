@@ -1,11 +1,12 @@
-name: Update CDN to HTTPS
+name: Force HTTPS Production
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  fix-links:
     runs-on: ubuntu-latest
     environment: Production 
 
@@ -13,14 +14,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Replace Links in HTML
+      - name: Replace All Http Statically with Https
         run: |
-          find . -name "*.html" -exec sed -i "s|http://cdn.statically.io/gh/digiitaltools/ads/main/social.js|${{ vars.JS_CDN_URL }}|g" {} +
+          find . -type f -not -path '*/.*' -exec sed -i 's|http://cdn.statically.io|https://cdn.statically.io|g' {} +
 
-      - name: Commit and Push
+      - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "style: force https for cdn links" || echo "No changes to commit"
+          git diff-index --quiet HEAD || git commit -m "chore: force all statically links to https"
           git push
