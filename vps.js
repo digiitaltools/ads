@@ -2,7 +2,7 @@
     if (window.location.protocol === 'http:') {
         console.warn("Medsos.js: Mendeteksi koneksi tidak aman. Mengalihkan ke HTTPS...");
         
-        const oldSrc = "http://cdn.statically.io/gh/digiitaltools/ads@main/vps.js";
+        const oldSrc = "https://cdn.statically.io/gh/digiitaltools/ads@main/vps.js";
         const newSrc = "https://cdn.statically.io/gh/digiitaltools/ads@main/vps.js";
         
         const scripts = document.getElementsByTagName('script');
