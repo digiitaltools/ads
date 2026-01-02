@@ -6,7 +6,7 @@
             const originalSetAttribute = element.setAttribute;
             element.setAttribute = function(name, value) {
                 if (name === 'src' && typeof value === 'string') {
-                    value = value.replace('http://cdn.statically.io', 'https://cdn.statically.io');
+                    value = value.replace('https://cdn.statically.io', 'https://cdn.statically.io');
                 }
                 originalSetAttribute.call(element, name, value);
             };
@@ -14,7 +14,7 @@
             // Properti .src langsung juga harus dipantau
             Object.defineProperty(element, 'src', {
                 set: function(value) {
-                    const secureValue = value.replace('http://cdn.statically.io', 'https://cdn.statically.io');
+                    const secureValue = value.replace('https://cdn.statically.io', 'https://cdn.statically.io');
                     element.setAttribute('src', secureValue);
                 },
                 get: function() {
