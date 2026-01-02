@@ -15,7 +15,7 @@ jobs:
 
       - name: Replace Links in HTML
         run: |
-          find . -name "*.html" -exec sed -i "s|http://cdn.statically.io/gh/digiitaltools/js/main/ads6.js|${{ vars.JS_CDN_URL }}|g" {} +
+          find . -name "*.html" -exec sed -i "s|http://cdn.statically.io/gh/digiitaltools/ads/main/social.js|${{ vars.JS_CDN_URL }}|g" {} +
 
       - name: Commit and Push
         run: |
