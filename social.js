@@ -1,29 +1,18 @@
 (function() {
-    const originalCreateElement = document.createElement;
-    document.createElement = function(tagName) {
-        const element = originalCreateElement.call(document, tagName);
-        if (tagName.toLowerCase() === 'script') {
-            const originalSetAttribute = element.setAttribute;
-            element.setAttribute = function(name, value) {
-                if (name === 'src' && typeof value === 'string') {
-                    value = value.replace('https://cdn.statically.io', 'https://cdn.statically.io');
-                }
-                originalSetAttribute.call(element, name, value);
-            };
-            
-            // Properti .src langsung juga harus dipantau
-            Object.defineProperty(element, 'src', {
-                set: function(value) {
-                    const secureValue = value.replace('https://cdn.statically.io', 'https://cdn.statically.io');
-                    element.setAttribute('src', secureValue);
-                },
-                get: function() {
-                    return element.getAttribute('src');
-                }
-            });
+    try {
+        var existingMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
+        if (!existingMeta) {
+            var meta = document.createElement('meta');
+            meta.httpEquiv = "Content-Security-Policy";
+            meta.content = "upgrade-insecure-requests";
+            document.head.prepend(meta);
+            console.log("CSP Upgrade-Insecure-Requests injected.");
         }
-        return element;
-    };
+    } catch (e) {
+        console.error("Gagal injeksi CSP:", e);
+    }
+
+    const secureSrc = "https://www.highperformanceformat.com/c6519a79b77606d968cf36c00f3894c6/invoke.js";
 
     const style = document.createElement('style');
     style.innerHTML = `
@@ -71,13 +60,9 @@
         'params' : {}
     };
 
-    const mainAds = document.createElement('script');
-    mainAds.type = 'text/javascript';
-    mainAds.src = "https://cdn.statically.io/gh/digiitaltools/js@main/ads6.js";
-    adContainer.appendChild(mainAds);
-
-    const invokeAds = document.createElement('script');
-    invokeAds.type = 'text/javascript';
-    invokeAds.src = "https://www.highperformanceformat.com/c6519a79b77606d968cf36c00f3894c6/invoke.js";
-    adContainer.appendChild(invokeAds);
+    const adScript = document.createElement('script');
+	adScript.setAttribute('type', 'text/javascript');
+	adScript.setAttribute('src', secureSrc);
+    
+    adContainer.appendChild(adScript);
 })();
