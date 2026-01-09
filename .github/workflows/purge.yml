@@ -1,5 +1,4 @@
 name: Purge Statically Cache
-
 on:
   push:
     paths:
@@ -10,9 +9,10 @@ jobs:
   purge:
     runs-on: ubuntu-latest
     steps:
-      - name: Purge Statically
+      - name: Purge Cache by Requesting Files
         run: |
-          # Perintah ini memberitahu Statically untuk mengambil versi terbaru
-          curl -I "https://cdn.statically.io/screenshot/gh/digiitaltools/ads/main/milet.js"
+          # Melakukan request ke URL lama dan URL baru untuk memicu refresh cache
+          curl -I "https://cdn.statically.io/gh/digiitaltools/ads/main/milet.js"
           curl -I "https://cdn.statically.io/gh/digiitaltools/ads@main/milet.js"
-          echo "Cache telah diperbarui untuk Statically"
+          
+          echo "Pemicu pembaruan cache Statically berhasil dikirim."
