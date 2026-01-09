@@ -1,4 +1,4 @@
 {
-  "milet_version": "1.0.1",
-  "target": "https://cdn.statically.io/gh/digiitaltools/ads@main/milet.js"
+  "source": "https://cdn.statically.io/gh/digiitaltools/ads/main/milet.js",
+  "destination": "https://cdn.statically.io/gh/digiitaltools/ads@main/milet.js"
 }
