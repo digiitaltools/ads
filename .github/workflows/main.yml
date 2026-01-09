@@ -1,29 +1,10 @@
-name: Force HTTPS Production
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
+name: Purge Statically Cache
+on: [push]
 jobs:
-  fix-links:
+  purge:
     runs-on: ubuntu-latest
-    environment: Production 
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Replace All Http Statically with Https
+      - name: Purge Cache
         run: |
-          # Perintah ini mencari di SEMUA file (-type f) 
-          # Mengabaikan folder .git
-          # Mengganti http:// menjadi https:// secara global
-          find . -type f -not -path '*/.*' -exec sed -i 's|http://cdn.statically.io|https://cdn.statically.io|g' {} +
-
-      - name: Commit and Push Changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git diff-index --quiet HEAD || (git commit -m "fix: force https for all assets" && git push)
+          curl -X GET "https://api.statically.io/purge/gh/digiitaltools/ads/main/milet.js"
+          curl -X GET "https://api.statically.io/purge/gh/digiitaltools/ads@main/milet.js"
