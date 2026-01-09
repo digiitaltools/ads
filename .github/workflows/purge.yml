@@ -11,8 +11,8 @@ jobs:
     steps:
       - name: Trigger Statically Purge
         run: |
-          # Gunakan endpoint cdn.statically.io dengan parameter purge
+          # Cara resmi Statically untuk membersihkan cache adalah dengan menambahkan ?purge
           curl -I "https://cdn.statically.io/gh/digiitaltools/ads/main/milet.js?purge"
           curl -I "https://cdn.statically.io/gh/digiitaltools/ads@main/milet.js?purge"
           
-          echo "Request purge berhasil dikirim ke Statically."
+          echo "Cache purge trigger sent successfully."
