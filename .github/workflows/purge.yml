@@ -9,10 +9,10 @@ jobs:
   purge:
     runs-on: ubuntu-latest
     steps:
-      - name: Purge Cache by Requesting Files
+      - name: Trigger Statically Purge
         run: |
-          # Melakukan request ke URL lama dan URL baru untuk memicu refresh cache
-          curl -I "https://cdn.statically.io/gh/digiitaltools/ads/main/milet.js"
-          curl -I "https://cdn.statically.io/gh/digiitaltools/ads@main/milet.js"
+          # Gunakan endpoint cdn.statically.io dengan parameter purge
+          curl -I "https://cdn.statically.io/gh/digiitaltools/ads/main/milet.js?purge"
+          curl -I "https://cdn.statically.io/gh/digiitaltools/ads@main/milet.js?purge"
           
-          echo "Pemicu pembaruan cache Statically berhasil dikirim."
+          echo "Request purge berhasil dikirim ke Statically."
