@@ -1,0 +1,18 @@
+name: Purge Statically Cache
+on:
+  push:
+    paths:
+      - 'milet.js'
+      - 'redirect.json'
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Statically Purge
+        run: |
+          # Cara resmi Statically untuk membersihkan cache adalah dengan menambahkan ?purge
+          curl -I "https://cdn.statically.io/gh/digiitaltools/ads/main/milet.js?purge"
+          curl -I "https://cdn.statically.io/gh/digiitaltools/ads@main/milet.js?purge"
+          
+          echo "Cache purge trigger sent successfully."
