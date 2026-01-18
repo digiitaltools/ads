@@ -10,7 +10,10 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Force Statically HTTPS
+      - name: Force HTTPS Redirect
         run: |
-          curl -I -L "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js"
-          curl -I "https://purge.jsdelivr.net/gh/digiitaltools/ads@main/semangka.js"
+          curl -I -X GET "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js" \
+          -H "X-Forwarded-Proto: https" \
+          -H "Upgrade-Insecure-Requests: 1"
+          
+          curl -I "https://cdn.statically.io/gh/digiitaltools/ads@main/semangka.js"
