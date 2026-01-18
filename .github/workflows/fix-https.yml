@@ -1,8 +1,8 @@
-rm .github/workflows/purge.yml
+name: Fix HTTPS
 
-@'
-name: Fix-HTTPS-Purge
 on:
+  workflow_dispatch: 
+  
   push:
     branches:
       - main
