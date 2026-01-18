@@ -1,3 +1,4 @@
+@'
 name: Fix HTTPS
 
 on:
@@ -10,10 +11,8 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Purge jsDelivr Cache
+      - name: Ping Statically (Format /main/)
         run: |
-          curl -I https://purge.jsdelivr.net/gh/digiitaltools/ads@main/semangka.js
-
-      - name: Ping Statically to Refresh
-        run: |
-          curl -I "https://cdn.statically.io/gh/digiitaltools/ads@main/semangka.js?${{ github.sha }}"
+          curl -I "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js"
+          curl -I "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js?purge"
+'@ | Out-File -FilePath .github/workflows/fix-https.yml -Encoding utf8
