@@ -1,4 +1,3 @@
-@'
 name: Fix HTTPS
 
 on:
@@ -14,4 +13,3 @@ jobs:
       - name: Purge Cache
         run: |
           curl -I https://purge.jsdelivr.net/gh/digiitaltools/ads@main/semangka.js
-'@ | Out-File -FilePath .github/workflows/fix-https.yml -Encoding utf8
