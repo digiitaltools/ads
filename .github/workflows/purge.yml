@@ -1,0 +1,14 @@
+@'
+name: Force HTTPS Purge
+on:
+  push:
+    branches: [ main ]
+jobs:
+  purge-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge JSDelivr HTTPS Cache
+        run: |
+          curl -I https://cdn.statically.io/gh/${{ github.repository }}@main/semangka.js
+          curl -I https://cdn.statically.io/gh/${{ github.repository }}@main/social.js
+'@ | Out-File -FilePath .github/workflows/purge.yml -Encoding utf8
