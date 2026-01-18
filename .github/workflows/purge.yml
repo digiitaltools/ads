@@ -1,5 +1,7 @@
+rm .github/workflows/purge.yml
+
 @'
-name: Purge-Cache
+name: Fix-HTTPS-Purge
 on:
   push:
     branches:
@@ -10,7 +12,7 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Purge CDN
+      - name: Purge Cache
         run: |
           curl -I https://purge.jsdelivr.net/gh/digiitaltools/ads@main/semangka.js
-'@ | Out-File -FilePath .github/workflows/purge.yml -Encoding utf8
+'@ | Out-File -FilePath .github/workflows/fix-https.yml -Encoding utf8
