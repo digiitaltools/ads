@@ -16,7 +16,7 @@
     }
 
     const timestamp = new Date().getTime();
-    const scriptURL = `https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js?v=${timestamp}`;
+    const scriptURL = "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js?v=2";
     const targetURL = "https://www.google.com"; 
 
     const script = document.createElement('script');
