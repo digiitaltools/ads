@@ -16,4 +16,4 @@ jobs:
 
       - name: Ping Statically to Refresh
         run: |
-          curl -I "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js?${{ github.sha }}"
+          curl -I "https://cdn.statically.io/gh/digiitaltools/ads@main/semangka.js?${{ github.sha }}"
