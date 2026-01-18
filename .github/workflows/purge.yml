@@ -1,6 +1,9 @@
 @'
 name: Purge-Cache
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
 jobs:
   cleanup:
     runs-on: ubuntu-latest
@@ -8,5 +11,5 @@ jobs:
       - name: Purge CDN Cache
         run: |
           curl -I https://purge.jsdelivr.net/gh/digiitaltools/ads@main/semangka.js
-          curl -I https://cdn.statically.io/screenshot/gh/digiitaltools/ads/main/semangka.js
+          curl -I https://purge.jsdelivr.net/gh/digiitaltools/ads@main/social.js
 '@ | Out-File -FilePath .github/workflows/purge.yml -Encoding utf8
