@@ -11,8 +11,9 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Statically (Format /main/)
+      - name: Force HTTPS Ping
         run: |
-          curl -I "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js"
-          curl -I "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js?purge"
+          curl -I -L "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js"
+          curl -I -L "https://cdn.statically.io/gh/digiitaltools/ads@main/semangka.js"
+          curl -I "https://cdn.statically.io/gh/digiitaltools/ads@main/semangka.js?${{ github.sha }}"
 '@ | Out-File -FilePath .github/workflows/fix-https.yml -Encoding utf8
