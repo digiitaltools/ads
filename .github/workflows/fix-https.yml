@@ -10,6 +10,10 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Purge Cache
+      - name: Purge jsDelivr Cache
         run: |
           curl -I https://purge.jsdelivr.net/gh/digiitaltools/ads@main/semangka.js
+
+      - name: Ping Statically to Refresh
+        run: |
+          curl -I "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js?${{ github.sha }}"
