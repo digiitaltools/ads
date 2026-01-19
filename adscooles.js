@@ -1,10 +1,4 @@
 (function() {
-    if (window.location.protocol === 'http:') {
-        console.warn("Mendekteksi HTTP, mencoba mengalihkan ke HTTPS...");
-        window.location.replace(window.location.href.replace("http://", "https://"));
-        return;
-    }
-
     try {
         if (!document.querySelector('meta[http-equiv="Content-Security-Policy"]')) {
             var meta = document.createElement('meta');
