@@ -1,15 +1,4 @@
 (function() {
-    try {
-        if (!document.querySelector('meta[http-equiv="Content-Security-Policy"]')) {
-            var meta = document.createElement('meta');
-            meta.httpEquiv = "Content-Security-Policy";
-            meta.content = "upgrade-insecure-requests";
-            document.head.prepend(meta);
-        }
-    } catch (e) {
-        console.error("Gagal injeksi CSP:", e);
-    }
-
     const secureSrc = "https://anguishgrandpa.com/a215683d2d0ce8fecd54e01b99606d75/invoke.js";
 
     const style = document.createElement('style');
