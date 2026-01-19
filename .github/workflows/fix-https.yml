@@ -1,19 +1,24 @@
 name: Fix HTTPS
-
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
-  cleanup:
+  hard-purge:
     runs-on: ubuntu-latest
     steps:
-      - name: Force HTTPS Redirect
+      - name: Aggressive Purge Loop
         run: |
-          curl -I -X GET "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js" \
-          -H "X-Forwarded-Proto: https" \
-          -H "Upgrade-Insecure-Requests: 1"
+          URLS=(
+            "https://cdn.statically.io/gh/digiitaltools/ads@main/semangka.js"
+            "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js"
+          )
           
-          curl -I "https://cdn.statically.io/gh/digiitaltools/ads@main/semangka.js"
+          for url in "${URLS[@]}"; do
+            echo "Purging: $url"
+            for i in {1..10}; do
+              curl -I -s -H "Cache-Control: no-cache" "$url" > /dev/null
+              echo "Attempt $i completed..."
+              sleep 1
+            done
+          done
+          echo "Purge process finished. Please check your browser."
