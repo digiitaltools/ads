@@ -1,0 +1,38 @@
+name: Global Cache Cleaner
+on:
+  workflow_dispatch:
+
+jobs:
+  clear-github-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clear GitHub Actions Cache
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Menghapus semua cache di GitHub Actions..."
+          repo=${{ github.repository }}
+          
+          cache_ids=$(gh cache list --repo $repo --limit 100 | awk '{print $1}')
+          
+          for id in $cache_ids; do
+            gh cache delete $id --repo $repo
+            echo "Deleted cache ID: $id"
+          done
+
+  purge-cdn-cache:
+    runs-on: ubuntu-latest
+    needs: clear-github-cache
+    steps:
+      - name: Aggressive Purge Statically (HTTPS Focus)
+        run: |
+          URLS=(
+            "https://cdn.statically.io/gh/digiitaltools/ads@main/semangka.js"
+            "https://cdn.statically.io/gh/digiitaltools/ads/main/semangka.js"
+          )
+          
+          for url in "${URLS[@]}"; do
+            echo "Memaksa refresh: $url"
+            curl -I -s -H "Cache-Control: no-cache" "$url"
+            curl -X PURGE "$url"
+          done
