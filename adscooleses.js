@@ -1,5 +1,6 @@
 (function() {
-    const secureSrc = "https://anguishgrandpa.com/a215683d2d0ce8fecd54e01b99606d75/invoke.js";
+    const primarySrc = "https://anguishgrandpa.com/a215683d2d0ce8fecd54e01b99606d75/invoke.js";
+    const backupSrc  = "https://www.highperformanceformat.com/a215683d2d0ce8fecd54e01b99606d75/invoke.js"; 
 
     const style = document.createElement('style');
     style.innerHTML = `
@@ -22,10 +23,8 @@
 
     const overlay = document.createElement('div');
     overlay.id = 'popup-overlay-ads';
-    
     const popupBox = document.createElement('div');
     popupBox.className = 'popup-box-ads';
-    
     const closeBtn = document.createElement('div');
     closeBtn.className = 'close-ad-x';
     closeBtn.innerHTML = 'CLOSE [X]';
@@ -47,8 +46,18 @@
         'params' : {}
     };
 
-    const adScript = document.createElement('script');
-    adScript.type = 'text/javascript';
-    adScript.src = secureSrc;
-    adContainer.appendChild(adScript);
+    function loadAdScript(url) {
+        const adScript = document.createElement('script');
+        adScript.type = 'text/javascript';
+        adScript.src = url;
+        adScript.onerror = function() {
+            if (url === primarySrc) {
+                console.error("Primary Ad Domain SSL Revoked. Trying backup...");
+                loadAdScript(backupSrc);
+            }
+        };
+        adContainer.appendChild(adScript);
+    }
+
+    loadAdScript(primarySrc);
 })();
