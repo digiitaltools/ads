@@ -1,0 +1,20 @@
+name: DNS Proxy Status Checker
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  check-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check CDN Status
+        run: |
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" https://cdn.statically.io)
+          echo "Status code for statically is: $STATUS"
+          if [ $STATUS -eq 200 ]; then
+            echo "CDN is up and HTTPS is valid."
+          else
+            echo "CDN might be down or SSL issue detected."
+            exit 1
+          fi
